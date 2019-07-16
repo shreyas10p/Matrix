@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
+</head>
+<body>
+    <table id="stu_table" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Grade</th>
+                <th>Division</th>
+                <th>Created date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in student_data %}
+            <tr>
+                <td>{{student.first_name}}</td>
+                <td>{{student.last_name}}</td>
+                <td>{{student.grade}}</td>
+                <td>{{student.division}}</td>
+                <td>{{student.created_on}}</td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+         <tfoot>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Grade</th>
+                <th>Division</th>
+                <th>Created Date</th>
+            </tr>
+        </tfoot>
+    </table>
+    <table id="stu_table_b" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Grade</th>
+                <th>Division</th>
+                <th>Created date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in student_data %}
+            <tr>
+                <td>{{student.first_name}}</td>
+                <td>{{student.last_name}}</td>
+                <td>{{student.grade}}</td>
+                <td>{{student.division}}</td>
+                <td>{{student.created_on}}</td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+<script>
+    $(document).ready(function() {
+
+
+        var table_a = $('#stu_table').DataTable({
+            scrollY:        200,
+            deferRender:    true,
+            scroller:       true,
+            fixedColumns:   {
+                rightColumns: 5
+            }
+        });
+        $('#stu_table tfoot th').each( function () {
+            console.log("inner");
+            var title = $(this).text();
+            $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+        } );
+        table_a.columns().every( function () {
+            var that = this;
+            $( 'input', this.footer() ).on( 'keyup change', function () {
+                if ( that.search() !== this.value ) {
+                    that
+                    .search( this.value )
+                    .draw();
+                }
+            } );
+        } );
+        $('#stu_table_b').DataTable({
+            fixedColumns:   {
+                leftColumns: 5
+            }
+        });
+
+} );
+</script>
+</body>
+</html>
+
+
+
