@@ -27,16 +27,19 @@
             {% endfor %}
 
         </tbody>
-         <tfoot>
+        <tfoot>
             <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Grade</th>
-                <th>Division</th>
-                <th>Created Date</th>
+                <input type="text" placeholder="Search First Name"/>
+                <input type="text" placeholder="Search Last Name"/>
+                <input type="text" placeholder="Search Grade"/>
+                <input type="text" placeholder="Search Division"/>
+                <input type="text" placeholder="Search Created date"/>
             </tr>
         </tfoot>
     </table>
+    <div style="margin:20px;">
+        <hr>
+    </div>
     <table id="stu_table_b" class="display" style="width:100%">
         <thead>
             <tr>
@@ -72,6 +75,8 @@
             scrollY:        200,
             deferRender:    true,
             scroller:       true,
+            bPaginate:      false,
+            searching:      false,
             fixedColumns:   {
                 rightColumns: 5
             }
@@ -79,22 +84,24 @@
         $('#stu_table tfoot th').each( function () {
             console.log("inner");
             var title = $(this).text();
-            $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+            console.log("title"+title);
+            console.log(this);
+            $(this).html('<input type="text" placeholder="Search '+title+'" />');
         } );
         table_a.columns().every( function () {
             var that = this;
             $( 'input', this.footer() ).on( 'keyup change', function () {
                 if ( that.search() !== this.value ) {
-                    that
-                    .search( this.value )
-                    .draw();
+                    console.log("inn")
+                    that.search( this.value ).draw();
                 }
             } );
         } );
         $('#stu_table_b').DataTable({
             fixedColumns:   {
                 leftColumns: 5
-            }
+            },
+            keys:   true
         });
 
 } );
